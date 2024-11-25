@@ -5,7 +5,8 @@ def initialize_database():
     Initialize the database file if it doesn't exist.
     """
     with open(DATABASE_FILE, 'a') as db:
-        pass  # Ensure the file exists
+        if db == False:
+            db = DATABASE_FILE
 
 def add_book(title, author):
     """
@@ -14,6 +15,12 @@ def add_book(title, author):
     :param author: The author of the book
     """
     # TODO: Append the book's title and author to the database file
+    with open(DATABASE_FILE, 'a') as db:
+        db.write(f"\nTitle,Author \n{title},{author}")
+
+# add_book("The end", "nkulu" )
+
+
 
 def search_book(title):
     """
@@ -22,6 +29,17 @@ def search_book(title):
     :return: A dictionary with the book's details if found, else None
     """
     # TODO: Implement logic to search for a book in the database file
+    with open(DATABASE_FILE, 'r') as db:
+        file = db.readlines()
+
+    for i in range(len(file)):
+        file_split = file[i].split(",")
+        if title == file_split[0]:
+            return file[i]
+        elif i == 3:
+            return None
+print(search_book("The end"))
+
 
 def list_books():
     """
